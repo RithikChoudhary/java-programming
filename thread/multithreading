@@ -1,0 +1,108 @@
+import java.util.*;
+import java.io.*;
+class search extends Thread
+{
+	String word;
+	String fil;
+	public search(String wo,String fl)
+	{
+		word=wo;
+		fil=fl;
+	}
+	public void run()
+		{
+			
+			int i=1;
+			int check=0;
+			Thread t=Thread.currentThread();
+			String[] spl=fil.split(" ");
+			for(String wor:spl)
+			{
+				System.out.println(t.getId() +"  checking no. "+i);
+				if(wor.equals(word))
+				{
+					System.out.println("word founded");
+					check++;
+					break;
+				}
+				i++;
+				try{
+				Thread.sleep(100);
+				}
+				catch(Exception e)
+			{
+				System.out.println("error"+e);
+			}
+			}
+			if(check<1)
+			{
+					System.out.println("cant find ");
+				
+			}
+			
+			
+		}
+	}
+class frequency_check implements Runnable
+{
+	String full;
+	public frequency_check(String ful)
+	{
+		full=ful;
+	}
+	public void run()
+	{
+		int count=0;
+		Thread t1=Thread.currentThread();
+		String[] splt=full.split(" ");
+		for(int i=0;i<splt.length;i++)
+		{
+			for(int j=0;j<splt.length;j++)
+			{
+				if(splt[i].equals(splt[j]))
+				{
+					count++;
+				}
+			}
+			//System.out.print("Document file 3-");
+			System.out.println(t1.getId()+" count word "+splt[i]+" = "+count);
+			count=0;
+		}
+	}
+}
+public class show
+{
+	public static void main(String[] args)throws Exception
+	{
+		int c=0;
+		String[] data=new String[3];
+		String[] document={"F:\\oopssss\\document1.TXT","F:\\oopssss\\document2.TXT","F:\\oopssss\\document3.TXT"};
+		System.out.println("Enter the word to search the word in:");
+		Scanner in=new Scanner(System.in);
+		String word=in.next();
+		in.close();
+		
+		System.out.println("1)Document1.txt 2)Document2.txt 3)Document3.txt");
+		
+		for(String getit:document)
+		{
+		
+			File file =  new File(getit);
+			Scanner sc =new Scanner(file);
+			sc.useDelimiter("\\Z");
+			data[c]=sc.next();
+			c++;		
+		}
+		search obj=new search(word,data[0]);
+		obj.start();
+		search obj1=new search(word,data[1]);
+		obj1.start();
+		//System.out.println("\n\n\n\nhere is the count of the word in 3rd document");
+		frequency_check obj3=new frequency_check(data[2]);
+		Thread t=new Thread(obj3);
+		t.start();
+		
+	}
+}
+
+
