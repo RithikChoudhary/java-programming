@@ -1,0 +1,28 @@
+//how to download image from the website 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.*;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
+public class imge
+{
+	public static void main(String[] args)
+	{
+		String extension=".jpg";
+		BufferedImage image=null; //getting the buffer empty
+		try
+		{
+			URL url= new URL("https://upload.wikimedia.org/wikipedia/commons/c/c9/Moon.jpg"); //getting the URL link in url
+			image=ImageIO.read(url); // reading or downloading the image mentioned in url
+			ImageIO.write(image,"jpg",new File("F:\\oopssss" + extension)); //writing the image in F local disk with oopssss.jpg name
+			
+			System.out.println("write is successfull");	
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace(); 
+			System.out.println("error!");
+		}
+	}
+}
