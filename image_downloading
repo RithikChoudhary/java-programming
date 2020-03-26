@@ -25,4 +25,4 @@ public class imge
 			System.out.println("error!");
 		}
 	}
-}
+} 
